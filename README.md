@@ -4,6 +4,10 @@ A real native desktop application for a **single Windows 10/11 computer**, built
 
 ## Run on Windows now (source edition)
 
+**Setup option:** extract the package and double-click **Setup-Windows.bat** on 64-bit Windows 10/11. This downloads Python 3.14.3 from python.org, verifies its Windows Authenticode signature and Python Software Foundation publisher, installs a per-user desktop runtime, copies the app, and creates desktop/Start Menu shortcuts. Internet is required for initial setup. No GitHub account or administrator access is needed. Existing client data is preserved. This setup script has been supplied for Windows, but it has not been executed on Windows in the authoring environment. If your Windows policy blocks PowerShell or software installation, use the source steps below with your administrator's approved Python installation.
+
+Manual source option:
+
 1. Extract this entire ZIP into a folder, e.g. `Documents\UV-Security-Manager`.
 2. Install **Python 3.12 or newer** from https://www.python.org/downloads/windows/ using the official installer. Include Tcl/Tk and select **Add Python to PATH**.
 3. Double-click **Start-UV-Security.bat**.
@@ -77,3 +81,11 @@ python app.py --data-dir /path/to/test-folder
 ```
 
 `storage.py` owns validation, relationships, authentication, billing and persistence; `app.py` owns the native desktop UI. Keep the database off shared/network drives. The app uses schema version 1 and refuses to open newer database formats.
+
+### Verification performed
+
+17 automated checks passed on Linux with a native Tk display: 13 data/authentication/backup/billing checks and 4 desktop UI smoke checks covering every navigation page, all record editors, product editing, client filters, detail views, live-link handoff and lock. Windows executable packaging and setup still require a Windows run. To run the native UI checks, set `UV_UI_TEST=1` before the unittest command.
+
+### Remove the application
+
+Close the app. Remove its desktop and Start Menu shortcuts and delete `%LOCALAPPDATA%\UVSecurityManager\app`. Use Windows Installed apps to remove the private Python runtime if desired. Keep `uv-security.sqlite3` and your backups unless you deliberately want to erase your client records. Do not delete the whole `UVSecurityManager` folder when retaining data.
