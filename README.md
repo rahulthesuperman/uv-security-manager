@@ -26,7 +26,7 @@ On a Windows computer with Python installed, double-click **Build-Windows.bat**.
 
 Alternatively, place these files at the **root of a GitHub repository**, including `.github/workflows/windows-build.yml`. Open **Actions → Build Windows Desktop → Run workflow**. After a successful run, download the `UV-Security-Manager-Windows` artifact and extract its EXE. The build needs internet access; the application itself works offline except when opening external links.
 
-The Windows build workflow is supplied but has not been executed by the authoring Linux environment. A Windows EXE is not included in this source ZIP.
+The Windows build workflow has passed on a Windows CI runner, including native desktop tests, executable startup, installer execution and installed application startup/database initialization. Download compiled executables from Releases; source archives do not include the EXE.
 
 ## Included features
 
@@ -90,7 +90,7 @@ python app.py --data-dir /path/to/test-folder
 
 ### Verification performed
 
-17 automated checks passed on Linux with a native Tk display: 13 data/authentication/backup/billing checks and 4 desktop UI smoke checks covering every navigation page, all record editors, product editing, client filters, detail views, live-link handoff and lock. Windows executable packaging and setup still require a Windows run. To run the native UI checks, set `UV_UI_TEST=1` before the unittest command.
+17 automated checks passed on Linux and on a Windows CI runner: 13 data/authentication/backup/billing checks and 4 desktop UI smoke checks covering every navigation page, all record editors, product editing, client filters, detail views, live-link handoff and lock. Windows executable packaging, installer execution and installed app startup/database initialization also passed. These checks do not constitute testing on every specific Windows 10/11 machine. To run the native UI checks, set `UV_UI_TEST=1` before the unittest command.
 
 ### Remove the application
 
