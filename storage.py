@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+from contextlib import closing
 import hashlib
 import hmac
 import os
@@ -279,7 +280,10 @@ class Store:
         target = Path(target)
         if target.resolve() == self.path.resolve():
             raise ValueError("Choose a different file for the backup.")
-        with sqlite3.connect(target) as destination:
+        # sqlite3.Connection's context manager commits; it does not close the
+        # file handle. Explicit closure is essential before Windows can move
+        # or replace the finished backup.
+        with closing(sqlite3.connect(target)) as destination:
             self.db.backup(destination)
         return target
 

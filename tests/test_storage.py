@@ -107,6 +107,11 @@ class StorageTests(unittest.TestCase):
         self.assertEqual(connection.execute("PRAGMA integrity_check").fetchone()[0], "ok")
         self.assertEqual(connection.execute("SELECT name FROM assets WHERE id=?", (ident,)).fetchone()[0], "4MP camera")
         connection.close()
+        # A finished backup must release its handle so users can move it to
+        # another drive immediately, including on Windows.
+        moved = path.with_name("moved-backup.sqlite3")
+        path.rename(moved)
+        self.assertTrue(moved.is_file())
         with self.assertRaises(ValueError):
             self.store.backup(self.store.path)
 

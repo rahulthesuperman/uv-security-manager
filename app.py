@@ -7,6 +7,7 @@ import html
 import os
 from pathlib import Path
 import subprocess
+import sqlite3
 import sys
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
@@ -544,7 +545,7 @@ class App(tk.Tk):
                 self.store.backup(path)
                 self.status.set("Backup saved to " + path)
                 messagebox.showinfo("Backup saved", "Database backup created. Copy referenced documents/photos separately.", parent=self)
-            except (OSError, ValueError) as exc:
+            except (OSError, ValueError, sqlite3.Error) as exc:
                 messagebox.showerror("Backup failed", str(exc), parent=self)
 
     def shutdown(self):
