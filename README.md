@@ -2,6 +2,12 @@
 
 A real native desktop application for a **single Windows 10/11 computer**, built with Python/Tkinter and SQLite. No subscription, web server or runtime package installation is required when using the built executable. All records are local. No real clients or camera credentials are included.
 
+## Windows installer (recommended)
+
+Download **UV-Security-Manager-Setup.exe** from this repository's Releases page, run it, and open the **UV Security Manager** desktop shortcut. This installer includes the runtime, needs no Python/GitHub knowledge or administrator account, and supports 64-bit Windows 10/11. On first launch, create your local administrator password. Uninstallation preserves your client database. This is an unsigned installer; no code-signing certificate is included.
+
+`windows-installer.iss` builds the per-user installer with Inno Setup 6. The Windows workflow runs data and native desktop tests, builds the executable and installer, installs it in a temporary directory, and verifies the installed executable initializes its SQLite database.
+
 ## Run on Windows now (source edition)
 
 **Setup option:** extract the package and double-click **Setup-Windows.bat** on 64-bit Windows 10/11. This downloads Python 3.14.3 from python.org, verifies its Windows Authenticode signature and Python Software Foundation publisher, installs a per-user desktop runtime, copies the app, and creates desktop/Start Menu shortcuts. Internet is required for initial setup. No GitHub account or administrator access is needed. Existing client data is preserved. This setup script has been supplied for Windows, but it has not been executed on Windows in the authoring environment. If your Windows policy blocks PowerShell or software installation, use the source steps below with your administrator's approved Python installation.

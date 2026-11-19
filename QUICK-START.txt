@@ -1,0 +1,30 @@
+UV SECURITY MANAGER - WINDOWS 10/11 (64-BIT)
+
+1. UV-Security-Manager-Setup.exe par double-click karke install karein.
+2. Desktop par UV Security Manager shortcut kholein.
+3. Pehli baar company name aur 10 ya adhik characters ka password banayein.
+   Koi default password nahi hai. Apna password surakshit rakhein.
+4. Clients mein client add karein.
+5. Sites & live view mein client ki location/site add karein.
+6. Products & assets mein har installed product ki poori detail bharein:
+   brand, model, serial, specifications, installation, warranty, AMC, invoice.
+7. Service jobs se complaint, technician aur repair history manage karein.
+8. Invoices & quotations se totals aur payment balance record karein.
+9. Settings & backup se backup doosri drive par save karte rahein.
+
+Client par double-click karke uske linked sites, products, service jobs aur
+billing records khol sakte hain. Kisi bhi product par double-click karke
+uska full record dekh sakte hain.
+
+App offline chalti hai. Website aur authorized camera portal kholne ke liye
+internet/network chahiye. Sites mein HTTPS live-view link add karein.
+Direct RTSP/ONVIF camera streaming is version mein included nahi hai.
+Website ka data automatically import/sync nahi hota.
+
+Data folder: %LOCALAPPDATA%\UVSecurityManager
+Attachments sirf file references hain: photos/documents ko alag backup karein.
+Database encrypted nahi hai; apna Windows account aur drive protect karein.
+Uninstall karne se client database nahi hataya jata.
+
+App mein Print / Save as PDF report browser mein khulti hai.
+Yeh single-PC version hai; multi-user/network sync included nahi hai.

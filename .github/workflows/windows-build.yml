@@ -33,10 +33,38 @@ jobs:
           $appProcess = Start-Process -FilePath '.\dist\UV-Security-Manager.exe' -ArgumentList "--data-dir `"$testData`"" -PassThru
           Start-Sleep -Seconds 5
           if ($appProcess.HasExited) { throw "Desktop executable exited unexpectedly: $($appProcess.ExitCode)" }
+          if (-not (Test-Path (Join-Path $testData 'uv-security.sqlite3'))) { throw 'The executable did not initialize its local database.' }
+          Stop-Process -Id $appProcess.Id -Force
+      - name: Build Windows installer
+        shell: pwsh
+        run: |
+          $compiler = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $compiler)) {
+            choco install innosetup --yes --no-progress
+            if ($LASTEXITCODE -ne 0) { throw 'Inno Setup installation failed.' }
+          }
+          & $compiler windows-installer.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Windows installer compilation failed.' }
+      - name: Verify installed application
+        shell: pwsh
+        run: |
+          $installFolder = Join-Path $env:RUNNER_TEMP 'UV-Installed'
+          $setupArguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', "/DIR=`"$installFolder`"")
+          $setupProcess = Start-Process -FilePath '.\installer\UV-Security-Manager-Setup.exe' -ArgumentList $setupArguments -Wait -PassThru
+          if ($setupProcess.ExitCode -ne 0) { throw "Installation failed: $($setupProcess.ExitCode)" }
+          $testData = Join-Path $env:RUNNER_TEMP 'uv-installed-smoke'
+          $installedExe = Join-Path $installFolder 'UV-Security-Manager.exe'
+          $appProcess = Start-Process -FilePath $installedExe -ArgumentList "--data-dir `"$testData`"" -PassThru
+          Start-Sleep -Seconds 5
+          if ($appProcess.HasExited) { throw "Installed app exited unexpectedly: $($appProcess.ExitCode)" }
+          if (-not (Test-Path (Join-Path $testData 'uv-security.sqlite3'))) { throw 'Installed application did not initialize its database.' }
           Stop-Process -Id $appProcess.Id -Force
       - name: Upload Windows executable
         uses: actions/upload-artifact@v4
         with:
           name: UV-Security-Manager-Windows
-          path: dist/UV-Security-Manager.exe
+          path: |
+            dist/UV-Security-Manager.exe
+            installer/UV-Security-Manager-Setup.exe
+            QUICK-START.txt
           if-no-files-found: error

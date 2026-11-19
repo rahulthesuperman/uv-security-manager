@@ -3,6 +3,7 @@ __pycache__/
 .build-venv/
 build/
 dist/
+installer/
 *.spec
 *.sqlite3
 *.sqlite3-*
